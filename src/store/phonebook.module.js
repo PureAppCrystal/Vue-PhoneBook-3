@@ -61,6 +61,16 @@ export const phonebook = {
             }
             state.list.push(phone);
         },
+        updatePhone(state, payload) {
+            console.log("====== module.phonebook - updatePhone ======")
+            console.log("payload : ", payload)
+            state.list.filter( phone => {
+                if (phone.id === payload.selectId ) {
+                    phone.name = payload.name;
+                    phone.number = payload.number;
+                }
+            })
+        },
         deletePhone(state, payload) {
             console.log("====== module.phonebook - deletePhone ======")
             const { id } = payload;
@@ -79,11 +89,9 @@ export const phonebook = {
         getPhoneById(state, selectedId) {
             // Actions 은 return 이 안되나
             console.log("====== module.phonebook - getPhoneById ======")
-            console.log("selectedId : ", selectedId)
             state.list.some( phone => {
                 const intId = parseInt(selectedId);
                 if ( phone.id === intId ) {
-                    console.log(" right")
                     state.selectPhone = phone;
                     return true;
                 }

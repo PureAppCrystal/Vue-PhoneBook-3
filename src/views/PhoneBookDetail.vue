@@ -37,7 +37,7 @@ export default {
 
             name: "",
             number: "",
-            selectId: 0,
+            selectId: "",
         }
     },
     computed: {
@@ -48,33 +48,71 @@ export default {
     methods: {
         ...mapMutations({
             addList: 'phonebook/addList',
+            updatePhone: 'phonebook/updatePhone',
             getPhoneById: 'phonebook/getPhoneById',
         }),
-        
+        onLeft: function() {
+            switch(this.type) {
+                case 'insert' :
+                    this.goBack();
+                    break;
+                case 'select' :
+                    this.goList();
+                    break;
+                case 'update' :
+                    this.goSelect();
+                    break;
+
+                
+                
+            }
+        },
         onRight: function() {
             switch(this.type) {
                 case 'insert' :
                     this.doInsert();
                     break;
-            
-                
+                case 'select' :
+                    this.goUpdate();
+                    break;
+                case 'update' :
+                    this.doUpdate();
+                    break;
             }
         },
-        onLeft: function() {
-            switch(this.type) {
-                case 'insert' :
-                case 'select' :
-                    this.goBack();
-                    break;
-                
-            }
+        goList: function() {
+            console.log("====== go List ======")
+            this.$router.push('/main/phonebook')
         },
         goBack: function() {
             console.log("====== go Back ======")
             this.$router.go(-1);
         },
+        goSelect: function() {
+            console.log("====== go select ======")
+            this.$router.push('/main/phonebook/select?id='+this.selectId);
+            this.type ='select'
+            this.title = "상세정보";
+            this.leftDesc = "뒤로";
+            this.rightDesc = "편집"
+            const { id } = this.$route.query;
+            this.selectId = parseInt(id);
+            this.getPhoneById(id)
+        },
+        goUpdate: function() {
+            this.$router.push('/main/phonebook/update?id='+this.selectId);
+
+            console.log("====== go Update ======")
+            this.type = 'update';
+            this.title = "편집";
+            this.leftDesc = "취소";
+            this.rightDesc = "완료"
+
+            
+        },
         doInsert: function() {
             console.log("====== do Insert ======")
+            
             const { name, number} = this;
 
             //유효성 체크
@@ -91,12 +129,31 @@ export default {
             } else {
                 alert("input both of name and number")
             }
-            
         },
+        doUpdate: function() {
+            console.log("====== do Update ======")
+            const { name, number, selectId} = this;
+            console.log(name)
+            console.log(number)
+            console.log(selectId)
+            if (name && number && selectId > -1) {
+                const reqData = {
+                    selectId: selectId,
+                    name: name,
+                    number: number
+                }
+                this.updatePhone(reqData);
+                this.goSelect();
+            } else {
+                alert("input both of name and number")
+            }
+        },
+        
         
     },
     mounted() {
         const path = this.$route.path;
+        console.log(path)
         if ( path.indexOf('insert') > -1 ) {
             console.log("====== insert mode ======")
             this.type = 'insert'
@@ -110,16 +167,40 @@ export default {
             this.leftDesc = "뒤로";
             this.rightDesc = "편집"
             const { id } = this.$route.query;
+            this.selectId = parseInt(id);
             this.getPhoneById(id)
+
+            // update 대비?
+            this.name=this.selectedPhone.name;
+            this.number=this.selectedPhone.number;
 
             
 
         } else if ( path.indexOf('update') > -1 ) { 
+            const { id } = this.$route.query;
+            // 예외처리 
+            if ( id === undefined ) {
+                this.$router.push('/main/phonebook')
+            }
+            this.selectId = parseInt(id);
+
             console.log("====== update mode ======")
-            this.type = 'update'
+            this.type = 'update';
+            this.title = "편집";
+            this.leftDesc = "취소";
+            this.rightDesc = "완료"
+
+            this.getPhoneById(id)
+
+            // update 대비?
+            this.name=this.selectedPhone.name;
+            this.number=this.selectedPhone.number;
+
+            
         } 
     },
     updated() {
+        
     }
 
 }
