@@ -6,8 +6,8 @@
         <button @click="doInsert"> 완료 </button>
     </div>
     <div id='insert-form'>
-            <input type='text' v-model="name"/> <br/>
-            <input type='text' v-model="number"/>
+            <input type='text' v-model="name" placeholder="이름을 입력하세요"/> <br/>
+            <input type='text' v-model="number" placeholder="전화번호를 입력하세요"/>
     </div>
 </div>    
 
@@ -48,7 +48,7 @@ export default {
                 this.number="";
                 this.goBack();
             } else {
-                console.log("input name, number")
+                alert("input both of name and number")
             }
             
         },
@@ -69,11 +69,20 @@ export default {
 }
 
 #insert-form {
+    display: flex;
+    flex-flow:column nowrap;
     margin-top: 3rem;
 }
 
 input {
     flex: 1;
+    margin: 0rem 1rem 0rem 1rem;
+    border-style: none;
+    border-bottom-style: solid;
+    border-width: 1px;
+    padding: 0.5rem;
+    outline: none;
+    font-size: 1.2rem;
 }
 
 

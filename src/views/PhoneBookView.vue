@@ -6,10 +6,10 @@
         <button @click="goInsert"> 등록 </button>
     </div>
     <div id='search'>
-        <input type="text" v-model="search" placeholder="search by name"/>
+        <input type="text" v-model="localSearch" v-on:keyup="searchKeyUp" placeholder="search by name"/>
     </div>
     <div id='list'>
-        <div id='phone' v-for="phone in list" v-bind:key="phone.id">
+        <div id='phone' v-for="phone in localSearch ? searchList : list" v-bind:key="phone.id">
             <div id='name'> {{phone.name}} </div>
             <button id='del' @click="doDelete(phone.id)"> 삭제 </button>
         </div>
@@ -26,18 +26,20 @@ export default {
     name: 'PhoneBookView',
     data() { 
         return {
-
+            localSearch: "",
         }
     },
     computed: {
         ...mapGetters({
             list: 'phonebook/getList',
-            search: 'phonebook/getSearch'
-        })
+            search: 'phonebook/getSearch',
+            searchList: 'phonebook/getSearchList'
+        }),
     },
     methods: {
         ...mapMutations({
-            deletePhone: 'phonebook/deletePhone'
+            deletePhone: 'phonebook/deletePhone',
+            doSearch: 'phonebook/doSearch',
         }),
         goHome: function() {
             console.log("====== go Home ======")
@@ -51,6 +53,12 @@ export default {
             console.log("====== do Delete ======")
             console.log("id : ", id)
             this.deletePhone({id});
+        },
+        searchKeyUp: function(e) {
+            console.log("====== searchKeyUp ======")
+            console.log(e.target.value);
+            const value = e.target.value;
+            this.doSearch(value);
         }
     }
     
@@ -76,8 +84,13 @@ export default {
 }
 #search input {
     flex: 1;
+    padding: 0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    outline: none;
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-width: 1px;
 }
 
 #list {

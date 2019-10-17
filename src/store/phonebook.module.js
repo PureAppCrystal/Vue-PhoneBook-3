@@ -41,6 +41,9 @@ export const phonebook = {
         },
         getSearch: state => {
             return state.search;
+        },
+        getSearchList: state => {
+            return state.searchList;
         }
     },
     mutations: {
@@ -58,6 +61,14 @@ export const phonebook = {
             const { id } = payload;
             state.list = state.list.filter( phone => {
                 return phone.id != id;
+            })
+        },
+        doSearch(state, payload) {
+            console.log("====== module.phonebook - doSearch ======")
+            state.searchList = state.list.filter( phone => {
+                if ( phone.name.indexOf(payload) > -1 || phone.number.indexOf(payload) > -1 ) {
+                    return phone;
+                }
             })
         }
     }
