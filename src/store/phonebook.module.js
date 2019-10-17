@@ -1,4 +1,5 @@
 import { router } from '@/routes'
+import { SourceMapConsumer } from '../../../../../../../Users/HoonyB/AppData/Local/Microsoft/TypeScript/3.6/node_modules/source-map/source-map';
 
 export const phonebook = {
     namespaced: true,
@@ -7,6 +8,7 @@ export const phonebook = {
         name: "",
         number: "",
         search: "",
+        selectPhone: {},
         list: [
             {
                 id: 0,
@@ -44,6 +46,9 @@ export const phonebook = {
         },
         getSearchList: state => {
             return state.searchList;
+        },
+        getSelectPhone : state => {
+            return state.selectPhone;
         }
     },
     mutations: {
@@ -70,6 +75,20 @@ export const phonebook = {
                     return phone;
                 }
             })
+        },
+        getPhoneById(state, selectedId) {
+            // Actions 은 return 이 안되나
+            console.log("====== module.phonebook - getPhoneById ======")
+            console.log("selectedId : ", selectedId)
+            state.list.some( phone => {
+                const intId = parseInt(selectedId);
+                if ( phone.id === intId ) {
+                    console.log(" right")
+                    state.selectPhone = phone;
+                    return true;
+                }
+            })
+
         }
     }
 }

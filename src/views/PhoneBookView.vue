@@ -9,12 +9,11 @@
         <input type="text" v-model="localSearch" v-on:keyup="searchKeyUp" placeholder="search by name"/>
     </div>
     <div id='list'>
-        <div id='phone' v-for="phone in localSearch ? searchList : list" v-bind:key="phone.id">
+        <div id='phone' v-for="phone in localSearch ? searchList : list" v-bind:key="phone.id" @click="goSelect(phone.id)">
             <div id='name'> {{phone.name}} </div>
-            <button id='del' @click="doDelete(phone.id)"> 삭제 </button>
+            <button id='del' @click.stop="doDelete(phone.id)"> 삭제 </button>
         </div>
     </div>
-    
 </div>    
 </template>
 
@@ -49,6 +48,10 @@ export default {
             console.log("====== go Insert ======")
             this.$router.push('/main/phonebook/insert')
         },
+        goSelect: function(id) {
+            console.log("====== go Select ======")
+            this.$router.push('/main/phonebook/select?id='+id)
+        },
         doDelete: function(id) {
             console.log("====== do Delete ======")
             console.log("id : ", id)
@@ -56,7 +59,6 @@ export default {
         },
         searchKeyUp: function(e) {
             console.log("====== searchKeyUp ======")
-            console.log(e.target.value);
             const value = e.target.value;
             this.doSearch(value);
         }

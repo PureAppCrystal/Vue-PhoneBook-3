@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import LoginPageView from '@/views/LoginPageView'
 import MainPageView from '@/views/MainPageView'
 import PhoneBookView from '@/views/PhoneBookView'
-import PhoneBookInsert from '@/views/PhoneBookInsert'
+import PhoneBookDetail from '@/views/PhoneBookDetail'
 
 Vue.config.devteools = true;
 Vue.use(VueRouter);
@@ -28,8 +28,16 @@ const routes = [
             },
             {
                 path: 'phonebook/insert',
-                component: PhoneBookInsert
+                component: PhoneBookDetail
             },
+            {
+                path: 'phonebook/select',
+                component: PhoneBookDetail
+            },
+            {
+                path: 'phonebook/update',
+                component: PhoneBookDetail
+            }
         ]
     },
 
