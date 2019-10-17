@@ -11,7 +11,7 @@
     <div id='list'>
         <div id='phone' v-for="phone in list" v-bind:key="phone.id">
             <div id='name'> {{phone.name}} </div>
-            <div id='del'> 삭제 </div>
+            <button id='del' @click="doDelete(phone.id)"> 삭제 </button>
         </div>
     </div>
     
@@ -36,6 +36,9 @@ export default {
         })
     },
     methods: {
+        ...mapMutations({
+            deletePhone: 'phonebook/deletePhone'
+        }),
         goHome: function() {
             console.log("====== go Home ======")
             this.$router.push('/main')
@@ -44,6 +47,11 @@ export default {
             console.log("====== go Insert ======")
             this.$router.push('/main/phonebook/insert')
         },
+        doDelete: function(id) {
+            console.log("====== do Delete ======")
+            console.log("id : ", id)
+            this.deletePhone({id});
+        }
     }
     
 }

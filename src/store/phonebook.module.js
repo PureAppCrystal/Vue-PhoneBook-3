@@ -52,6 +52,13 @@ export const phonebook = {
                 number: payload.number
             }
             state.list.push(phone);
+        },
+        deletePhone(state, payload) {
+            console.log("====== module.phonebook - deletePhone ======")
+            const { id } = payload;
+            state.list = state.list.filter( phone => {
+                return phone.id != id;
+            })
         }
     }
 }
