@@ -113,6 +113,9 @@ export default {
             this.getPhoneById(id)
         },
         goUpdate: function() {
+            if (isNaN(this.selectId) ) {
+                return;
+            }
             this.$router.push('/main/phonebook/update?id='+this.selectId);
 
             console.log("====== go Update ======")
@@ -165,7 +168,6 @@ export default {
     },
     mounted() {
         const path = this.$route.path;
-        console.log(path)
         if ( path.indexOf('insert') > -1 ) {
             console.log("====== insert mode ======")
             this.type = 'insert'
@@ -179,15 +181,16 @@ export default {
             this.leftDesc = "뒤로";
             this.rightDesc = "편집"
             const { id } = this.$route.query;
-            this.selectId = parseInt(id);
-            this.getPhoneById(id)
+            if(id !== undefined ) {
+                this.selectId = parseInt(id);
+                if (!isNaN(this.selectId) ) {
+                    this.getPhoneById(id)
 
-            // update 대비?
-            this.name=this.selectedPhone.name;
-            this.number=this.selectedPhone.number;
-
-            
-
+                    // update 대비?
+                    this.name=this.selectedPhone.name;
+                    this.number=this.selectedPhone.number;
+                }
+            } 
         } else if ( path.indexOf('update') > -1 ) { 
             const { id } = this.$route.query;
             // 예외처리 
