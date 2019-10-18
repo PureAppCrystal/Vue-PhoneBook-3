@@ -3,9 +3,8 @@ export const formatter = {
     phoneFormatter, 
 }
 
-function phoneFormatter(num, type=0) {
+function phoneFormatter(num, type) {
     let formatNum ="";
-
     if(num.length == 11 ) {
         if ( type == 0 ) {
             formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3');
@@ -31,3 +30,4 @@ function phoneFormatter(num, type=0) {
     }
     return formatNum;
 }
+

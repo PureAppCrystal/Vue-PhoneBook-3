@@ -1,5 +1,4 @@
 import { router } from '@/routes'
-import { SourceMapConsumer } from '../../../../../../../Users/HoonyB/AppData/Local/Microsoft/TypeScript/3.6/node_modules/source-map/source-map';
 
 export const phonebook = {
     namespaced: true,

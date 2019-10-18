@@ -3,10 +3,26 @@ import { userService } from '../services';
 import { router } from '@/routes'
 
 
+// const state = {
+//     userInfo: "",
+// }
+
+// const getters = {
+//     getUserInfo( state ) {
+//         return state.userInfo;
+//     }
+// }
+
+// export const user = {
+//     namespaced: true,
+//     state,
+//     getters
+// }
+
 export const user = {
     namespaced: true,
     state: {
-        userInfo: null,
+        userInfo: "",
     },
     getters: {
         getUserInfo: state => {

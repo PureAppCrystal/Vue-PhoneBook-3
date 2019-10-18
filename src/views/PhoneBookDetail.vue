@@ -5,16 +5,17 @@
         <div> {{title}} </div>
         <button @click="onRight"> {{rightDesc}} </button>
     </div>
+    
     <div v-if="type =='insert' || type == 'update'">
         <div id='insert-form'>
                 <input type='text' v-model="name" placeholder="이름을 입력하세요"/>
-                <input type='text' v-model="number"  placeholder="전화번호를 입력하세요"/>{{formatNum}}
+                <input type='text' v-model="formattedNumber"  placeholder="전화번호를 입력하세요"/>{{formatNum}}
         </div>
     </div>
     <div v-else-if="type =='select'">
         <div id='select-form'>
                 <div>{{selectedPhone.name || '정보가 없습니다.' }}</div>
-                <div>{{selectedPhone.number || '정보가 없습니다.' }}</div>
+                <div>{{formattedNumber || '정보가 없습니다.' }}</div>
         </div>
     </div>
 </div>    
@@ -24,6 +25,7 @@
 <script>
 import {mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import {formatter} from '@/utils/formatter'
+import {stringHelper} from '@/utils/string.helper'
 
 export default {
     name: 'PhoneBookInsert',
@@ -44,6 +46,17 @@ export default {
         ...mapGetters({
             selectedPhone : 'phonebook/getSelectPhone',
         }),
+        formattedNumber: {
+            get: function() {
+                let oriNumber = this.number;
+                 oriNumber = formatter.phoneFormatter(oriNumber, 1);
+                return oriNumber;
+            },
+            set: function(newNumber) {
+                const plainNumber = newNumber.replaceAll('-', '');
+                this.number = plainNumber;
+            }
+        }
     },
     methods: {
         ...mapMutations({
@@ -114,8 +127,6 @@ export default {
             console.log("====== do Insert ======")
             
             const { name, number} = this;
-
-            //유효성 체크
             if (name && number ) {
                 const reqData = {
                 name: name,
@@ -125,7 +136,8 @@ export default {
                 // 성공후 초기화 및 화면 이동 
                 this.name="";
                 this.number="";
-                this.goBack();
+                //////this.goBack(); -> insert 로 시작시 고백하면 이전 페이지(별개임 ) 로 가면서 이전 페이지의 상태를 가져옴 
+                this.goList();
             } else {
                 alert("input both of name and number")
             }

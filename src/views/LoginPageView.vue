@@ -14,7 +14,6 @@
         <div>
             <button type="submit"> Login </button>
         </div>
-        <!-- {{ loginInfo.username }} -->
     </form>
 </div>
 </template>
@@ -37,9 +36,9 @@ export default {
         })
     },
     methods: {
-        //
+        
         ...mapActions('user', ['login']),
-        //
+        
         handleSubmit: function(e) {
             console.log("====== login - handleSubmit ======")
             // 유효성검사
@@ -54,8 +53,15 @@ export default {
             }
         }
     },
+    created() {
+        console.log("====== LoginPage Created ======")
+    },
     mounted() {
         console.log("====== LoginPage mounted ======")
+        
+    },
+    updated() {
+        console.log("====== LoginPaged Udeated ======")
         console.log(" loginInfo : ", this.loginInfo)
         if ( this.loginInfo) {
             this.$router.push('/main')
