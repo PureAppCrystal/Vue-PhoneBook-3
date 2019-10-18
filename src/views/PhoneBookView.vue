@@ -42,7 +42,7 @@ export default {
         }),
         goHome: function() {
             console.log("====== go Home ======")
-            this.$router.push('/main')
+            this.$router.push('/home')
         },
         goInsert: function() {
             console.log("====== go Insert ======")

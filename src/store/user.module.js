@@ -56,6 +56,12 @@ export const user = {
                     return false;
                 }
             })
+        },
+        logout({dispatch, commit}) {
+            console.log("====== user.module - logout ======")
+            userService.logout()
+            commit('setUserInfo', "");        
+            router.push("/login")
         }
     }
 }

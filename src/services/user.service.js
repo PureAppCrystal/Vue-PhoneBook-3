@@ -12,10 +12,18 @@ export const userService = {
 
         return Axios.post("http://192.168.111.66:8000/user/login", reqData)
         .then ( res => {
-            return res.data.userInfo;
+            const userInfo = res.data.userInfo;
+            //session 
+            //localStorage.setItem('user', JSON.stringify(userInfo));
+            sessionStorage.setItem('user', JSON.stringify(userInfo));
+            return userInfo;
         })
         .catch( e => {
             console.log("err : ", e);
         })
     },
+    logout: function() {
+        console.log("====== user.service - logout ======")
+        sessionStorage.removeItem('user')
+    }
 }

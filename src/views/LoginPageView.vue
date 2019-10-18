@@ -21,6 +21,7 @@
 
 <script>
 import {mapState, mapActions, mapMutations, mapGetters } from 'vuex'
+import { userService } from '@/services';
 
 export default {
     name: 'loginPageView',
@@ -57,7 +58,6 @@ export default {
         console.log("====== LoginPage Created ======")
     },
     mounted() {
-        console.log("====== LoginPage mounted ======")
         
     },
     updated() {
