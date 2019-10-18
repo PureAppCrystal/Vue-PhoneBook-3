@@ -25,6 +25,10 @@ export default {
 
         }
     },
+    mounted() {
+        console.log("====== HomePageView mounted ======")
+        console.log("params : ", this.$route.params);
+    }
 }
 </script>
 

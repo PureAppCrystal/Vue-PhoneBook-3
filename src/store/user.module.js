@@ -47,7 +47,8 @@ export const user = {
                     commit('setUserInfo', userInfo);        
                     this.state.userInfo = userInfo;
                     // 화면이동
-                    router.push("/main")
+                    // router.push("/home")
+                    router.push({name:'home', params: { obj: "obj", q: "aa", b: "bb"}})
                 } else {
                     console.log("user not found")
                     alert("can not found user")

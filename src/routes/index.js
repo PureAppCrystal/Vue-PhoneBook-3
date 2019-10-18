@@ -20,11 +20,14 @@ const routes = [
     },
     {
         path: '/login',
-        component: LoginPageView
+        component: LoginPageView,
+        
     },
     {
         path: '/home',
+        name: 'home',
         component: HomePageView,
+        props: true
     },
     {
         path: '/main',
